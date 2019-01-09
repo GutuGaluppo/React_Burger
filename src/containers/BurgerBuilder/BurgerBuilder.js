@@ -96,34 +96,48 @@ class BurgerBuilder extends Component {
     });
   }
 
-  render() {
-    const disabledInfo = {
-      ...this.state.ingredients
-    };
-    for (let key in disabledInfo) {
-      disabledInfo[key] = disabledInfo[key] <= 0
-    }
-    // {salad: true, meat: false, ...}
-    // if its "true" it should disable the LESS button
-    return (
-      <Aux>
-        <Modal
-          show={this.state.purchasing}
-          modalClosed={this.purchaseCancelHandler}>
-          <OrderSummary ingredients={this.state.ingredients} />
-        </Modal>
-        <Burger ingredients={this.state.ingredients} />
-        <BuildControls
-          ingredientAdded={this.addIngredientHandler}
-          ingredientRemoved={this.removeIngredientHandler}
-          disabled={disabledInfo}
-          purchasable={this.state.purchasable}
-          ordered={this.purchaseHandler}
-          price={this.state.totalPrice}
-        />
-      </Aux>
-    );
+
+  purchaseContinueHandler = () => {
+    alert("You continue!")
+  });
+}
+
+
+
+render() {
+  const disabledInfo = {
+    ...this.state.ingredients
+  };
+  for (let key in disabledInfo) {
+    disabledInfo[key] = disabledInfo[key] <= 0
   }
+  // {salad: true, meat: false, ...}
+  // if its "true" it should disable the LESS button
+  return (
+    <Aux>
+      <Modal
+        show={this.state.purchasing}
+        modalClosed={this.purchaseCancelHandler}>
+        <OrderSummary
+          ingredients={this.state.ingredients}
+          porchaseCancelled={this.state.purchaseCancelHandler}
+          porchaseContinued={this.state.purchaseContinueHandler}
+        />
+      </Modal>
+      <Burger
+        ingredients={this.state.ingredients}
+      />
+      <BuildControls
+        ingredientAdded={this.addIngredientHandler}
+        ingredientRemoved={this.removeIngredientHandler}
+        disabled={disabledInfo}
+        purchasable={this.state.purchasable}
+        ordered={this.purchaseHandler}
+        price={this.state.totalPrice}
+      />
+    </Aux>
+  );
+}
 }
 
 export default BurgerBuilder;
