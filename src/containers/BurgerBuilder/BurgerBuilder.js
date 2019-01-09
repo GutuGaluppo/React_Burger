@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import Aux from '../../hoc/Aux';
 import Burger from '../../components/Burger/Burger';
-import BuildControls from '../../components/Burger/BuildControls/BuildControls'
+import BuildControls from '../../components/Burger/BuildControls/BuildControls';
+import Modal from '../../components/UI/Modal/Modal';
+import OrderSummary from '../../components/Burger/OrderSummary/OrderSummay';
 
 const INGREDIENT_PRICES = {
   salad: 0.5,
@@ -37,9 +39,9 @@ class BurgerBuilder extends Component {
       .reduce((sum, el) => {
         return sum + el;
       }, 0);
-      this.setState({
-        purchasable: sum > 0
-      })
+    this.setState({
+      purchasable: sum > 0
+    })
   }
 
   addIngredientHandler = (type) => {
@@ -58,7 +60,7 @@ class BurgerBuilder extends Component {
     });
     this.updatePusrchaseState(updatedIngredients)
   }
-  
+
   removeIngredientHandler = (type) => {
     const oldCount = this.state.ingredients[type];
     if (oldCount <= 0) {
@@ -92,6 +94,9 @@ class BurgerBuilder extends Component {
     // if its "true" it should disable the LESS button
     return (
       <Aux>
+        <Modal>
+          <OrderSummary ingredients={this.state.ingredients}/>
+        </Modal>
         <Burger ingredients={this.state.ingredients} />
         <BuildControls
           ingredientAdded={this.addIngredientHandler}
